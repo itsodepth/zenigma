@@ -1,0 +1,4 @@
+#notification-message {
+    color: red; /* Memberi warna merah pada teks */
+    display: none; /* Menyembunyikan elemen ini secara default */
+}

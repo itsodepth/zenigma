@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Zenigma</title>
+        <link rel="icon" type="image/png" href="img/logo.png" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body class="bg-slate-900 text-white flex items-center justify-center h-screen">
+        <div class="container bg-slate-800 rounded-2xl shadow-2xl relative flex flex-col items-center p-4 m-8 lg:flex-row lg:justify-between lg:p-8">
+            <div id="timer-card" class="ml-0 lg:ml-10 text-center lg:text-left justify-center">
+                <h3 class="text-slate-400 tracking-widest text-sm uppercase">ZENIGMA TIMER</h3>
+                <h1 id="timer" class="text-7xl lg:text-8xl font-bold font-mono mt-4 mb-8">00:00:00</h1>
+                <p id="notification-message"></p>
+                <div class="button">
+                    <div class="interaktifButton flex gap-4 mt-8">
+                        <button id="start" class="px-4 py-2 bg-slate-700 rounded-lg font-semibold bg-green-600 hover:bg-green-500">Start</button>
+                        <button id="stop" class="px-4 py-2 bg-slate-700 rounded-lg font-semibold hover:bg-slate-600 transition-colors">Stop</button>
+                        <button id="reset" class="px-4 py-2 bg-slate-700 rounded-lg font-semibold hover:bg-slate-600 transition-colors">Reset</button>
+                    </div>
+                    <div class="tambahWaktu flex gap-4 mt-8">
+                        <button id="tambah1" class="px-4 py-2 bg-transparent border border-slate-600 hover:bg-slate-700 rounded-lg font-semibold hover:bg-slate-600 transition-colors">+1 Menit</button>
+                        <button id="tambah5" class="px-4 py-2 bg-transparent border border-slate-600 hover:bg-slate-700 rounded-lg font-semibold hover:bg-slate-600 transition-colors">+5 Menit</button>
+                    </div>
+                    <div class="kurangiWaktu flex gap-4 mt-8">
+                        <button id="kurangi1" class="px-4 py-2 bg-transparent border border-slate-600 hover:bg-slate-700 rounded-lg font-semibold hover:bg-slate-600 transition-colors">-1 Menit</button>
+                        <button id="kurangi5" class="px-4 py-2 bg-transparent border border-slate-600 hover:bg-slate-700 rounded-lg font-semibold hover:bg-slate-600 transition-colors">-5 Menit</button>
+                    </div>
+                </div>
+            </div>
+            <img src="img/kaela.gif" alt="GIF Kaela" id="kaela-gif" class="w-32 h-32 mt-5 lg:w-60 lg:h-60 lg:mt-0 mr-10 rounded-full object-cover" />
+        </div>
+        <footer class="absolute bottom-4 left-1/2 -translate-x-1/2 text-slate-700">by Depth</footer>
+        <div id="alarm-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+            <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl text-center w-full max-w-sm">
+                <h2 class="text-2xl font-bold text-white mb-4">Waktu Habis!</h2>
+                <p class="text-slate-300 mb-6">Waktunya untuk istirahat sejenak.</p>
+                <button id="close-alarm-button" class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-6 rounded-lg">OK</button>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
