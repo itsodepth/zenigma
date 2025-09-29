@@ -11,6 +11,7 @@ const alarmModal = document.getElementById("alarm-modal");
 const closeAlarmButton = document.getElementById("close-alarm-button");
 const alarmSound = new Audio("sound/waktuHabis.mp3");
 const DEFAULT_FOCUS_TIME = 25;
+const ORIGINAL_TITLE = "Zenigma";
 let endTime;
 let focustime = DEFAULT_FOCUS_TIME;
 let timeInSeconds = focustime * 60;
@@ -40,10 +41,26 @@ function changeTime(amount) {
 }
 
 function updateDisplay(secondsLeft) {
-    const hours = Math.floor(secondsLeft / 3600);
-    const minutes = Math.floor((secondsLeft % 3600) / 60);
-    const seconds = secondsLeft % 60;
-    timer.textContent = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    let formattedTime;
+    if (secondsLeft >= 3600) {
+        // kondisi jika waktu lebih dari atau sama dengan 1 jam
+        const hours = Math.floor(secondsLeft / 3600);
+        const minutes = Math.floor((secondsLeft % 3600) / 60);
+        const seconds = secondsLeft % 60;
+        formattedTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    } else {
+        // kondisi jika waktu kurang dari 1 jam
+        const minutes = Math.floor(secondsLeft / 60);
+        const seconds = secondsLeft % 60;
+        formattedTime = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    }
+
+    timer.textContent = formattedTime;
+    if (isTimerRunning) {
+        document.title = `${formattedTime} | ${ORIGINAL_TITLE}`;
+    } else {
+        document.title = ORIGINAL_TITLE;
+    }
 }
 
 startButton.addEventListener("click", function () {
@@ -70,7 +87,8 @@ startButton.addEventListener("click", function () {
                 alarmSound.loop = true;
                 alarmSound.play();
                 alarmModal.classList.remove("hidden");
-                updateDisplay(0);
+                timeInSeconds = focustime * 60;
+                updateDisplay(timeInSeconds);
                 return;
             }
             updateDisplay(timeInSeconds);
