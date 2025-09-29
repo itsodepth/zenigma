@@ -10,6 +10,7 @@ const buttonKurangi5Menit = document.getElementById("kurangi5");
 const alarmModal = document.getElementById("alarm-modal");
 const closeAlarmButton = document.getElementById("close-alarm-button");
 const alarmSound = new Audio("sound/waktuHabis.mp3");
+let endTime;
 let focustime = 0;
 let timeInSeconds = focustime * 60;
 let timerInterval;
@@ -37,10 +38,10 @@ function changeTime(amount) {
     updateDisplay();
 }
 
-function updateDisplay() {
-    const hours = Math.floor(timeInSeconds / 3600);
-    const minutes = Math.floor((timeInSeconds % 3600) / 60);
-    const seconds = timeInSeconds % 60;
+function updateDisplay(secondsLeft) {
+    const hours = Math.floor(secondsLeft / 3600);
+    const minutes = Math.floor((secondsLeft % 3600) / 60);
+    const seconds = secondsLeft % 60;
     timer.textContent = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
     timer.textContent = formattedTime;
 }
@@ -57,18 +58,22 @@ startButton.addEventListener("click", function () {
     } else {
         isTimerRunning = true;
         // Setiap kali tombol start diklik, kita mulai intervalnya
+        const now = Date.now(); // Waktu saat ini dalam milidetik
+        endTime = now + timeInSeconds * 1000; // Hitung waktu selesai dalam milidetik
         timerInterval = setInterval(function () {
+            const remainingMiliseconds = endTime - Date.now(); // hitung sisa waktu dalam milidetik
+            const remainingSeconds = Math.round(remainingMiliseconds / 1000); // konversi ke detik dan bulatkan
+            timeInSeconds = remainingSeconds;
             if (timeInSeconds <= 0) {
                 clearInterval(timerInterval);
                 isTimerRunning = false;
                 alarmSound.loop = true;
                 alarmSound.play();
                 alarmModal.classList.remove("hidden");
-                updateDisplay();
+                updateDisplay(0);
                 return;
             }
-            timeInSeconds--;
-            updateDisplay();
+            updateDisplay(timeInSeconds);
         }, 1000);
     }
 });
