@@ -10,8 +10,9 @@ const buttonKurangi5Menit = document.getElementById("kurangi5");
 const alarmModal = document.getElementById("alarm-modal");
 const closeAlarmButton = document.getElementById("close-alarm-button");
 const alarmSound = new Audio("sound/waktuHabis.mp3");
+const DEFAULT_FOCUS_TIME = 25;
 let endTime;
-let focustime = 0;
+let focustime = DEFAULT_FOCUS_TIME;
 let timeInSeconds = focustime * 60;
 let timerInterval;
 let isTimerRunning = false;
@@ -35,7 +36,7 @@ function changeTime(amount) {
     }
 
     timeInSeconds = focustime * 60;
-    updateDisplay();
+    updateDisplay(timeInSeconds);
 }
 
 function updateDisplay(secondsLeft) {
@@ -43,7 +44,6 @@ function updateDisplay(secondsLeft) {
     const minutes = Math.floor((secondsLeft % 3600) / 60);
     const seconds = secondsLeft % 60;
     timer.textContent = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-    timer.textContent = formattedTime;
 }
 
 startButton.addEventListener("click", function () {
@@ -93,8 +93,9 @@ stopButton.addEventListener("click", function () {
 resetButton.addEventListener("click", function () {
     clearInterval(timerInterval);
     isTimerRunning = false;
+    focustime = DEFAULT_FOCUS_TIME;
     timeInSeconds = focustime * 60;
-    updateDisplay();
+    updateDisplay(timeInSeconds);
 });
 
 buttonTambah1Menit.addEventListener("click", function () {
@@ -112,3 +113,5 @@ buttonKurangi1Menit.addEventListener("click", function () {
 buttonKurangi5Menit.addEventListener("click", function () {
     changeTime(-5);
 });
+
+updateDisplay(timeInSeconds);
